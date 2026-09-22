@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { categoryBreakdown, distributionRows, formatRate, topFinding } from "./selectors";
+import { categoryBreakdown, categoryMatrix, distributionRows, formatRate, topFinding } from "./selectors";
 
 describe("formatRate", () => {
   it("uses an em dash for a zero denominator", () => {
@@ -47,5 +47,17 @@ describe("categoryBreakdown", () => {
       { category: "A", status: "complete" as const },
     ];
     expect(categoryBreakdown(apps)).toEqual({ A: 1, B: 2 });
+  });
+});
+
+describe("categoryMatrix", () => {
+  it("counts each value once per completed app and ignores incomplete apps", () => {
+    const apps = [
+      { category: "CRM", status: "complete" as const, values: ["REST", "REST", "GraphQL"] },
+      { category: "CRM", status: "failed" as const, values: ["REST"] },
+    ];
+    expect(categoryMatrix(apps, (app) => app.values)).toEqual([
+      { category: "CRM", total: 1, values: { GraphQL: 1, REST: 1 } },
+    ]);
   });
 });

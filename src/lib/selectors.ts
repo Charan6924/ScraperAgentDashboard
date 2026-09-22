@@ -39,6 +39,31 @@ export function categoryBreakdown(apps: ReadonlyArray<Pick<ReportApp, "category"
     }, {});
 }
 
+export function categoryMatrix<T extends { category: string; status: string }>(
+  apps: ReadonlyArray<T>,
+  valuesFor: (app: T) => ReadonlyArray<string>,
+): Array<{ category: string; total: number; values: Record<string, number> }> {
+  const buckets = new Map<string, { total: number; values: Record<string, number> }>();
+
+  for (const app of apps) {
+    if (app.status !== "complete") continue;
+    const bucket = buckets.get(app.category) ?? { total: 0, values: {} };
+    bucket.total += 1;
+    for (const value of new Set(valuesFor(app))) {
+      bucket.values[value] = (bucket.values[value] ?? 0) + 1;
+    }
+    buckets.set(app.category, bucket);
+  }
+
+  return [...buckets.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([category, bucket]) => ({
+      category,
+      total: bucket.total,
+      values: Object.fromEntries(Object.entries(bucket.values).sort(([left], [right]) => left.localeCompare(right))),
+    }));
+}
+
 export function completedApps(report: Report) {
   return report.apps.filter(isCompletedApp);
 }
