@@ -48,14 +48,14 @@ export function AppTable({ apps, sort, onSort, onView }: {
             const complete = isCompletedApp(app);
             return (
               <tr key={app.id}>
-                <th scope="row"><strong>{app.name}</strong><small>{app.website_hint}</small></th>
-                <td>{app.category}</td>
-                <td>{complete ? app.derived.authentication_families.join(", ") || "Unknown" : "—"}</td>
-                <td>{complete ? humanizeKey(app.record.access.model) : "—"}</td>
-                <td>{complete ? <StatusBadge tone={verdictTone(app.record.buildability.assessment)}>{humanizeKey(app.record.buildability.assessment)}</StatusBadge> : "—"}</td>
-                <td>{complete ? humanizeKey(app.derived.strict_mcp_status) : "—"}</td>
-                <td><StatusBadge tone={verdictTone(app.status)}>{humanizeKey(app.status)}</StatusBadge></td>
-                <td><button className="table-action" type="button" onClick={(event) => onView(app, event.currentTarget)}>View <span className="sr-only">{app.name}</span></button></td>
+                <th scope="row" data-label="App"><strong>{app.name}</strong><small>{app.website_hint}</small></th>
+                <td data-label="Category">{app.category}</td>
+                <td data-label="Authentication">{complete ? app.derived.authentication_families.join(", ") || "Unknown" : "—"}</td>
+                <td data-label="Access">{complete ? humanizeKey(app.record.access.model) : "—"}</td>
+                <td data-label="Buildability">{complete ? <StatusBadge tone={verdictTone(app.record.buildability.assessment)}>{humanizeKey(app.record.buildability.assessment)}</StatusBadge> : "—"}</td>
+                <td data-label="Strict MCP">{complete ? humanizeKey(app.derived.strict_mcp_status) : "—"}</td>
+                <td data-label="Status"><StatusBadge tone={verdictTone(app.status)}>{humanizeKey(app.status)}</StatusBadge></td>
+                <td data-label="Details"><button className="table-action" type="button" onClick={(event) => onView(app, event.currentTarget)}>View <span className="sr-only">{app.name}</span></button></td>
               </tr>
             );
           })}

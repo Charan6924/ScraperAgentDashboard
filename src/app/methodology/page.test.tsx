@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
+import { getReport } from "@/lib/report";
 import MethodologyPage from "./page";
 
 describe("Methodology page", () => {
@@ -20,7 +21,8 @@ describe("Methodology page", () => {
     expect(screen.getByText('.venv/bin/python batch_runner.py')).toBeInTheDocument();
     expect(screen.getByText(/report_exporter.py/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Limitations" })).toBeInTheDocument();
-    expect(screen.getAllByText(/September 22, 2026/i).length).toBeGreaterThan(0);
+    const researchDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(new Date(getReport().metadata.generated_at));
+    expect(screen.getAllByText(new RegExp(researchDate, "i")).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Source repository" })).toHaveAttribute("href", "https://github.com/Charan6924/ScraperAgent");
     expect(screen.getByRole("link", { name: "Live deployment" })).toHaveAttribute("href", "#deployment");
   });

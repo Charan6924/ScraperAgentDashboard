@@ -1,34 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Integration Index
 
-## Getting Started
+A static, evidence-led case study of API access, authentication, MCP availability, and agent-toolkit buildability across 100 requested applications. The site is the presentation layer for the separate [ScraperAgent research pipeline](https://github.com/Charan6924/ScraperAgent).
 
-First, run the development server:
+The committed snapshot currently discloses 98 completed two-pass reviews and 2 failed records. Failed records remain visible but do not contribute to completed-app denominators.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Pages
+
+- `/` — two-minute executive overview.
+- `/trends` — overall and category-level patterns.
+- `/apps` — searchable 100-app explorer with evidence details.
+- `/verification` — claim outcomes, citations, corrections, and failures.
+- `/methodology` — agent architecture, limitations, and reproduction steps.
+
+There are no API routes, databases, accounts, or runtime data fetches. Next.js validates the committed report with Zod at build time and emits a static `out/` directory.
+
+## Architecture
+
+```text
+ScraperAgent
+  apps.json + corrected records + second-pass reviews + batch manifest
+                              │
+                              ▼
+                     report_exporter.py
+                              │
+                              ▼
+ScraperAgentDashboard/src/data/report.json
+                              │
+                    Zod validation + selectors
+                              │
+                              ▼
+          five static Next.js report pages + client-only filters
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The website uses normalized presentation fields. Displayed MCP results come from `derived.strict_mcp_status`, which only counts a server when it has a GitHub repository, usable documentation, and direct MCP evidence.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local setup
 
-## Learn More
+Requirements: Node.js 20.9 or newer and npm.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Verification
 
-## Deploy on Vercel
+```bash
+npm run test:run
+npm run lint
+npm run typecheck
+npm run test:e2e
+npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`test:e2e` builds the static export and serves `out/` locally. Its Playwright suite checks all five routes, desktop and mobile navigation, filters, deep links, evidence drawer keyboard behavior, failed requests, and Axe accessibility results. Install its browser once if needed:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx playwright install chromium
+```
+
+## Refresh the report snapshot
+
+During development, run this from the sibling `ScraperAgent` repository:
+
+```bash
+.venv/bin/python report_exporter.py \
+  --output ../ScraperAgentDashboard/src/data/report.json \
+  --allow-incomplete
+```
+
+Then validate the imported snapshot:
+
+```bash
+cd ../ScraperAgentDashboard
+npm run test:run
+npm run lint
+npm run typecheck
+npm run build
+```
+
+Remove `--allow-incomplete` only when the research manifest is final-ready. Without that flag, the exporter intentionally rejects unresolved incomplete records rather than silently dropping them.
+
+## Deploy to Vercel
+
+1. Push this directory as its own Git repository.
+2. Import that repository into Vercel as a Next.js project.
+3. Use `npm install` and `npm run build`; no environment variables are required.
+4. Deploy. `next.config.ts` uses `output: "export"`, so the build is portable static content.
+
+The dashboard repository is self-contained. Vercel does not need filesystem access to the Python research repository.
+
+## Data interpretation
+
+- Authentication and interface totals are multi-select app counts and may exceed the completed-app denominator.
+- Evidence support is an automated verifier judgment, not ground-truth accuracy.
+- Corrected records remain drafts until a human resolves unavailable sources, ambiguous claims, rejected corrections, and other queued items.
+- Vendor documentation and access policies change; use evidence retrieval timestamps and refresh the research before a current production decision.
