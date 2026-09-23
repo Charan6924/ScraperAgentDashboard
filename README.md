@@ -90,6 +90,8 @@ Remove `--allow-incomplete` only when the research manifest is final-ready. With
 3. Use `npm install` and `npm run build`; no environment variables are required.
 4. Deploy. `next.config.ts` uses `output: "export"`, so the build is portable static content.
 
+Vercel automatically supplies `VERCEL_PROJECT_PRODUCTION_URL`, which populates the Methodology page's live-deployment link. Set `NEXT_PUBLIC_SITE_URL` only when you want to override that canonical URL.
+
 The dashboard repository is self-contained. Vercel does not need filesystem access to the Python research repository.
 
 ## Data interpretation

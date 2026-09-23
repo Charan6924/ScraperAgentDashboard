@@ -15,6 +15,8 @@ const sourceUrl = "https://github.com/Charan6924/ScraperAgent";
 export default function MethodologyPage() {
   const report = getReport();
   const researchDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(new Date(report.metadata.generated_at));
+  const deploymentUrl = process.env.NEXT_PUBLIC_SITE_URL
+    ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null);
   return (
     <div className="report-page methodology-page">
       <PageIntro eyebrow="How it was built" title="Two research passes, deterministic gates, and an explicit human boundary." summary="The pipeline uses Codex CLI web search for research and verification, Python for contracts and orchestration, and a constrained correction layer that preserves the audit trail." />
@@ -54,7 +56,7 @@ export default function MethodologyPage() {
 
       <section className="project-links" id="deployment" aria-label="Project links">
         <a href={sourceUrl}>Source repository</a>
-        <a href="#deployment">Live deployment</a>
+        {deploymentUrl ? <a href={deploymentUrl}>Live deployment</a> : <span>Live deployment pending Vercel import</span>}
       </section>
     </div>
   );

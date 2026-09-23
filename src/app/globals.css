@@ -259,7 +259,8 @@ code { padding: 0.08em 0.28em; background: var(--neutral-soft); font-family: ui-
 .limitations-list { display: grid; gap: 0.75rem; max-width: 55rem; margin: 0; padding-left: 1.2rem; }
 .limitations-list li::marker { color: var(--accent); }
 .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-.project-links a { padding: 0.65rem 0.85rem; border: 1px solid var(--ink); border-radius: var(--radius); font-weight: 750; text-decoration: none; }
+.project-links a, .project-links span { padding: 0.65rem 0.85rem; border: 1px solid var(--ink); border-radius: var(--radius); font-weight: 750; text-decoration: none; }
+.project-links span { color: var(--ink-soft); border-color: var(--rule); }
 
 .site-footer { padding-block: 2.5rem; border-top: 1px solid var(--rule); background: var(--ink); color: #e8e9e4; }
 .site-footer__grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; }

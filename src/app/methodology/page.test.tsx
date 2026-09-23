@@ -24,6 +24,6 @@ describe("Methodology page", () => {
     const researchDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(new Date(getReport().metadata.generated_at));
     expect(screen.getAllByText(new RegExp(researchDate, "i")).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Source repository" })).toHaveAttribute("href", "https://github.com/Charan6924/ScraperAgent");
-    expect(screen.getByRole("link", { name: "Live deployment" })).toHaveAttribute("href", "#deployment");
+    expect(screen.getByText("Live deployment pending Vercel import")).toBeInTheDocument();
   });
 });
