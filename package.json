@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:standalone": "node scripts/standalone-report.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
-    "test:run": "vitest run",
+    "test:run": "vitest run && node --test scripts/standalone-report.test.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

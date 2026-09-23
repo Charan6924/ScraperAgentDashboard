@@ -94,6 +94,16 @@ Vercel automatically supplies `VERCEL_PROJECT_PRODUCTION_URL`, which populates t
 
 The dashboard repository is self-contained. Vercel does not need filesystem access to the Python research repository.
 
+## Single-file HTML submission
+
+Generate a portable report with all styles, scripts, app records, and evidence embedded:
+
+```bash
+npm run build:standalone
+```
+
+Upload `submission-report.html` when a submission form accepts only one file. It opens directly from disk and needs no `_next` directory or internet connection, except when a reader chooses to open an external evidence link.
+
 ## Data interpretation
 
 - Authentication and interface totals are multi-select app counts and may exceed the completed-app denominator.
