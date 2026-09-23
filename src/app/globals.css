@@ -226,6 +226,41 @@ button, input, select { font: inherit; }
 .evidence-list blockquote { margin: 0.55rem 0; color: #2f3e62; font-size: 0.78rem; }
 .evidence-list small, .empty-note { color: var(--ink-soft); font-size: 0.68rem; }
 
+.verification-breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); }
+.verification-breakdown article { padding: 1.2rem; background: var(--paper-raised); border-top: 4px solid var(--rule); }
+.verification-breakdown article[data-tone="positive"] { border-color: var(--positive); }
+.verification-breakdown article[data-tone="warning"] { border-color: var(--warning); }
+.verification-breakdown article[data-tone="negative"] { border-color: var(--negative); }
+.verification-breakdown p { margin: 0; color: var(--ink-soft); font-size: 0.78rem; }
+.verification-breakdown strong { display: block; margin-block: 0.6rem; font: 500 clamp(2rem, 5vw, 3.2rem)/1 Georgia, serif; }
+.verification-breakdown small { color: var(--ink-soft); }
+.verification-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.verification-summary { padding: 1.25rem; background: var(--paper-raised); border-top: 4px solid var(--warning); }
+.verification-summary h2 { margin: 0; font: 500 clamp(1.8rem, 4vw, 2.8rem)/1 Georgia, serif; }
+.verification-summary > p:last-child { color: var(--ink-soft); }
+.verification-caption { margin-top: -3rem; color: var(--ink-soft); }
+.case-study-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.case-study-card { padding: 1.2rem; background: var(--paper-raised); border-top: 4px solid var(--rule); }
+.case-study-card[data-tone="positive"] { border-color: var(--positive); }
+.case-study-card[data-tone="warning"] { border-color: var(--warning); }
+.case-study-card[data-tone="negative"] { border-color: var(--negative); }
+.case-study-card h3 { margin: 0; font: 500 1.55rem/1.2 Georgia, serif; }
+.case-study-card > p:not(.eyebrow) { color: var(--ink-soft); }
+.case-study-card a { color: var(--accent); font-weight: 750; }
+.method-list { display: grid; border-top: 1px solid var(--rule); }
+.method-step { display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; padding: 2rem 0; border-bottom: 1px solid var(--rule); }
+.method-step > span { color: var(--accent); font: 700 0.75rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.method-step h2 { margin: 0; font: 500 clamp(1.7rem, 3vw, 2.5rem)/1.1 Georgia, serif; }
+.method-step p { max-width: 52rem; color: var(--ink-soft); }
+code { padding: 0.08em 0.28em; background: var(--neutral-soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; }
+.command-stack { display: grid; gap: 0.6rem; }
+.command-stack pre { margin: 0; overflow-x: auto; padding: 0.9rem 1rem; background: var(--ink); color: #e8e9e4; }
+.command-stack code { padding: 0; background: transparent; color: inherit; }
+.limitations-list { display: grid; gap: 0.75rem; max-width: 55rem; margin: 0; padding-left: 1.2rem; }
+.limitations-list li::marker { color: var(--accent); }
+.project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.project-links a { padding: 0.65rem 0.85rem; border: 1px solid var(--ink); border-radius: var(--radius); font-weight: 750; text-decoration: none; }
+
 .site-footer { padding-block: 2.5rem; border-top: 1px solid var(--rule); background: var(--ink); color: #e8e9e4; }
 .site-footer__grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; }
 .site-footer p { margin: 0; }
@@ -245,7 +280,7 @@ button, input, select { font: inherit; }
   .primary-nav a[aria-current="page"]::after { inset: 0 auto 0 -0.75rem; width: 3px; height: auto; }
   .site-main { padding-block: 3.5rem; }
   .page-intro h1 { font-size: clamp(2.7rem, 15vw, 4.5rem); }
-  .metric-grid--four, .chart-grid, .findings-grid, .verification-band, .trend-section, .cluster-grid, .disclosure, .site-footer__grid { grid-template-columns: 1fr; }
+  .metric-grid--four, .chart-grid, .findings-grid, .verification-band, .verification-breakdown, .verification-grid, .case-study-grid, .trend-section, .cluster-grid, .disclosure, .site-footer__grid { grid-template-columns: 1fr; }
   .section-heading--sticky, .trend-section__intro { position: static; }
   .workflow { grid-template-columns: 1fr; }
   .workflow__stage { min-height: 0; border-right: 0; border-bottom: 1px solid var(--rule); }
